@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<title>全屏滚轮</title>
+<style type="text/css" rel="stylesheet">
+html,body{width:100%;height:100%;}
+body{margin:0;overflow:hidden;}
+.box{width:100%;height:100%;
+background:url(img/hhlls.jpg) no-repeat center;
+background-size:cover;
+}
+.box:nth-child(2){background-image:url(img/shz.gif)}
+.box:nth-child(3){background-image:url(img/yts.jpg)}
+.box:nth-child(4){background-image:url(img/lxzs.jpg)}
+#icon{
+position:fixed;
+left:50px;
+top:50%;
+}
+#icon ul li{list-style:none;width:20px;height:20px;
+border:solid 2px #fff;
+margin:5px;border-radius:50%;}
+.colorfff{background:#fff;}
+</style>
+
+</head>
+<body>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div class="box"></div>
+<div id="icon">
+<ul>
+	<li class="colorfff"></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+</div>
+<script type="text/javascript" src="js/jquery2.1.1.min.js"></script>
+<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+<script type="text/javascript">
+	var width=$("body").width();
+	var height=$("body").height();
+	var index=0;
+	var oli=$("#icon ul li");
+	oli.click(function(){
+		$(this).addClass("colorfff").siblings().removeClass("colorfff");
+		 index=$(this).index();
+		$("body,html").animate({"scrollTop":index*height+"px"},1000);
+	})
+	//当浏览器窗口大小改变时重新获取宽高
+	$(window).resize(function(){//监听浏览器的变化
+		auto();
+		$(document).scrollTop(index*height);
+	});
+	auto();
+	var nowtime=new Date();
+	var n=oli.size();
+	$(document).mousewheel(function(e,dr){//e鼠标事件，dr滚动方向
+		if(new Date()-nowtime>1000){
+			nowtime=new Date();
+			if(dr<0){//滚轮向下
+				index++;
+				index%=n;
+			}
+			else{//滚轮向s
+				index--;
+				if(index<0){
+					index=n-1;
+				}
+			}
+			oli.eq(index).addClass("colorfff").siblings().removeClass("colorfff");
+			$("body,html").animate({"scrollTop":index*height+"px"},1000);
+		}
+	})
+	//页面重新加载Bug
+	setTimeout(function(){
+		$(document).scrollTop(0);//显示在最上面
+	},10);
+	function auto(){
+		width=$("body").width();
+		height=$("body").height();
+		$(".box").width(width);
+		$(".box").height(height);
+	}
+</script>
+</body>
+</html>
