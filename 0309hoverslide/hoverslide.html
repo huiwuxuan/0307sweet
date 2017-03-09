@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<title>滑块效果</title>
+<style type="text/css">
+	body,ul,li,div,h3{margin:0;padding:0;}
+	ul,li{list-style:none;}
+	#box{margin:100px auto;width:800px;height:150px;}
+	#box ul li{width:150px;height:150px;float:left;margin-right:10px;position:relative;overflow:hidden;}
+	#box ul li img{width:100%;height:100%;}
+	#box ul li .text{width:100%;height:100%;background-color:rgba(0,255,255,0.6);color:#fff;position:absolute;top:150px;left:0;}
+</style>
+<script src="js/jquery2.1.1.min.js"></script>
+<script type="text/javascript">
+		function move(e,obj,bool){
+			var top=obj.offset().top,
+				bottom=top+obj.height();
+				left = obj.offset().left;
+				right = left + obj.width();
+			var x = e.pageX,
+				y = e.pageY;
+			var st = Math.abs(y-top),
+				sb = Math.abs(y-bottom),
+				sl = Math.abs(x-left),
+				sr = Math.abs(x-right);
+				//判断最小值
+			var min = Math.min(st,sb,sl,sr);
+			switch(min){
+				case st ://从上边划入
+				if(bool){
+					obj.find(".text").css({
+						top:"-150px",
+						left:0
+					}).stop().animate({
+						top:0,
+						left:0
+					},500);
+				}else{
+					obj.find(".text").stop().animate({
+						top:"-150px",
+						left:0
+					},500);
+				};
+				break;
+				case sb ://从下边划入
+				if(bool){
+					obj.find(".text").css({
+						top:"150px",
+						left:0
+					}).stop().animate({
+						top:0
+					},500);
+				}else{
+					obj.find(".text").stop().animate({
+						top:"150px",
+						left:0
+					},500);
+				};
+				break;
+				case sl ://从左边划入
+				if(bool){
+					obj.find(".text").css({
+						top:0,
+						left:"-150px"
+					}).stop().animate({
+						left:0
+					},500);
+				}else{
+					obj.find(".text").stop().animate({
+						left:"-150px"
+					},500);
+				};
+				break;
+				case sr ://从右边划入
+				if(bool){
+					obj.find(".text").css({
+						top:0,
+						left:"150px"
+					}).stop().animate({
+						left:0
+					},500);
+				}else{
+					obj.find(".text").stop().animate({
+						left:"150px"
+					},500);
+				};
+				break;
+			}
+		}
+	$(function(){
+		//鼠标划入划出事件
+		$("#box ul li").hover(function(e){
+			move(e,$(this),true);
+		},function(e){
+			move(e,$(this),false);
+		});
+	})
+</script>
+</head>
+<body>
+	<div id="box">
+		<ul>
+			<li>
+				<img src="img/jst.jpg" />
+				<div class="text">
+					<h3>倦收天</h3>
+					<hr />
+					<p>内容</p>
+				</div>
+			</li>
+			<li>
+				<img src="img/yts.jpg" />
+				<div class="text">
+					<h3>説太岁</h3>
+					<hr />
+					<p>内容</p>
+				</div>
+			</li>
+			<li>
+				<img src="img/hhlls.jpg" />
+				<div class="text">
+					<h3>宦海疗灵师</h3>
+					<hr />
+					<p>内容</p>
+				</div>
+			</li>
+			<li>
+				<img src="img/lxzs.jpg" />
+				<div class="text">
+					<h3>六弦之首</h3>
+					<hr />
+					<p>内容</p>
+				</div>
+			</li>
+			<li>
+				<img src="img/shz.gif" />
+				<div class="text">
+					<h3>素还真</h3>
+					<hr />
+					<p>内容</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
